@@ -1,0 +1,9 @@
+.mymodule-main {
+    float: left;
+    max-width: 100%;
+    min-width: 50%;
+}
+
+ .mymodule-index-index .a-center.view.last {
+    display: none !important;
+}
