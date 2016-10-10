@@ -1,0 +1,39 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">   
+  <mymodule_index_index>   
+    <reference name="head">
+            <action method="addItem"><type>js_css</type><name>mymodule/mymodule.css</name></action>
+	</reference>
+    <reference name="content">   
+		<block type="mymodule/index" name="mymodule_index" template="mymodule/index.phtml"/>   
+    </reference>   
+  </mymodule_index_index>   
+
+    <mymodule_index_ticketstatus>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="mymodule/index" name="mymodule_index" template="mymodule/TicketStatus.phtml"/>   
+    </reference>   
+  </mymodule_index_ticketstatus>   
+
+  <customer_logged_in>
+    	<reference name="top.links">
+			<action method="addLink" translate="label title" module="mymodule"><label>My Module</label>
+			<url>{{baseUrl}}mymodule</url>
+			<title>My Module</title><prepare/><urlParams/><position>0</position></action>
+		</reference>
+	</customer_logged_in>
+	
+    <mymodule_index_reply>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="mymodule/index" name="mymodule_index" template="mymodule/reply.phtml"/>   
+    </reference>   
+  </mymodule_index_reply>   
+
+</layout>   
+	

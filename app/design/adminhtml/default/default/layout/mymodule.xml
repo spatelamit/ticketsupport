@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <mymodule_adminhtml_mymodulebackend_index>
+	<reference name="content">
+	  <block type="adminhtml/notification_toolbar" name="mymodulebackend" template="mymodule/mymodulebackend.phtml"/>
+	  			  <!-- adminhtml/notification_toolbar-->
+				  <!-- mymodule/adminhtml_mymodulebackend-->
+	</reference>
+  </mymodule_adminhtml_mymodulebackend_index>
+	
+	<mymodule_adminhtml_mymodulebackend_ticketreply>
+	<reference name="content">
+	  <block type="adminhtml/notification_toolbar" name="mymodulebackend" template="mymodule/ticketreply.phtml"/>
+	  			  <!-- adminhtml/notification_toolbar-->
+				  <!-- mymodule/adminhtml_mymodulebackend-->
+	</reference>
+  </mymodule_adminhtml_mymodulebackend_ticketreply>
+	
+	
+	
+</layout>

@@ -1,0 +1,184 @@
+<?php 
+   if(!Mage::getSingleton('customer/session')->isLoggedIn()){
+       echo "Sorry you are not logged in please login <a href='".$this->getUrl('customer/account/login/')."'> here</a>";
+       //$this->redirect($this->getUrl());
+		  Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl()); 
+
+       
+       
+   }else{
+   // Load the customer's data
+			$customer = Mage::getSingleton('customer/session')->getCustomer();
+			$customer->getName(); // Full Name
+			$customer->getEmail();
+			
+
+			
+   ?>
+   <?php
+		  $orders = Mage::getResourceModel('sales/order_collection')
+				->addFieldToSelect('*')
+				->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
+				->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
+				->setOrder('created_at', 'desc');   
+				$this->setOrders($orders);
+	?>
+<div class=" mymodule-main ">
+   <form action="<?php echo $this->getUrl('mymodule/index/post');?>" method="post" class="mymodule-form"enctype='multipart/form-data'>
+      <ul class="form-list">
+         <li class="fields">
+               <div class="field name-firstname">
+                  <label class="required" for="Full Name"><em>*</em>Full Name</label>
+                  <div class="input-box">
+                     <input type="text" name="fullname" value="<?php echo $customer->getName();?>" class="input-text required-entry" required>
+                     <input type="hidden" name="CustomerId" value="<?php echo $customer->getId();?>" />
+                  </div>
+               </div>
+         </li>
+         <li>
+            <label class="required" for="email_address"><em>*</em>Email Address</label>
+            <div class="input-box">
+               <input type="email" name="email" value="<?php echo $customer->getEmail();?>" class="input-text validate-email required-entry" required>
+            </div>
+         </li>
+		  <li>
+            <label class="required" for="email_address"><em>*</em>Select Your Order</label>
+            <div class="input-box">
+			   <select name="orderid" class="input-text" required>
+					<option value="">Select order id</option>
+			   <?
+					foreach ($orders as $order):
+				?>
+					<option value="<?php echo $order->getRealOrderId(); ?>">
+					#<?php echo $order->getRealOrderId(); ?>
+					</option>
+               <? endforeach; ?>
+
+			   </select>
+            </div>
+         </li>
+		<?/*
+		<!--  <li>
+            <label class="required" for="email_address"><em>*</em>Select product</label>
+            <div class="input-box">
+               <!--<input type="text" name="orderid" class="input-text validate-email required-entry" >-->
+			
+			   <select name="orderid" class="input-text" required>
+					<option value="">Select product</option>
+
+				<?
+					foreach ($orders as $order):
+				?>
+				  <option value="<?php echo $order->getId();?>">
+<?
+				 //$order->getRealOrderId().'&nbsp;at&nbsp;'.$this->formatDate($order->getCreatedAtStoreDate()).'&nbsp;('.$order->formatPrice($order->getGrandTotal()).')';
+					//~ $id_order = $order->getRealOrderId();
+					//~ $order = Mage::getModel('sales/order')->loadByIncrementId($id_order);
+					//~ $items = $order->getAllItems();
+					//~ foreach($items as $i):
+						//~ $_product = Mage::getModel('catalog/product')->load($i->getProductId())->getSku();
+						//~ echo $order->getRealOrderId();
+						//~ print_r($_product);
+						//~ echo "<br/>";
+						//~ 
+					//~ endforeach;
+						$orderIncrementId = $order->getRealOrderId();
+						$order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+						$order->getId();
+
+						$product = Mage::getModel('catalog/product')->load($order->getId()); 
+
+						$productType = $product->getTypeId();
+						echo $product->getName();
+						
+						echo "&nbsp;";
+						echo $product->getStatus();
+						echo "&nbsp;";
+						
+						echo $product->getPrice(); //pro
+						//echo "<img src='".$product->getImageUrl()."'>";
+
+				
+
+			?>				   
+               </option>
+               <? endforeach; ?>
+               </select>
+            </div>
+         </li>-->
+         */?> 
+		<li>
+            <label class="required" for="email_address"><em>*</em>Request Type</label>
+            <div class="input-box">
+				<select name="request_type" class="input-text" required>
+					<option value="">Select Request type</option>
+					<option value="Product Not recieved.">Product Not recieved.</option>
+					<option value="Damage Product recieved.">Damage Product recieved.</option>
+					<option value="Product Return Request.">Product Return Request.</option>
+					<option value="Request to Exchange Product">Request to Exchange Product</option>
+					<option value="Other">Other</option>
+				</select>
+            </div>
+         </li>
+		  <li>
+            <label class="required" for="email_address"><em>*</em>Related File</label>
+            <div class="input-box">
+               <input type="file" name="relatedfile" class="input-text validate-email required-entry" >
+            </div>
+         </li>
+		<li class="wide">
+			<label class="required" for="comment"><em>*</em>Comment</label>
+			<div class="input-box">
+				<textarea name="message" rows="3" cols="5" class="required-entry input-text" required></textarea>
+			</div>
+		</li>
+      </ul>
+      <div class="buttons-set">
+			<input value="submit" class="button" title="Register" name="submit" type="submit">
+        </div>
+   </form>
+</div>
+<div class="mymodule-main ">
+	<h3><a style="float:left" href="<?php echo $this->getUrl('mymodule/index/ticketstatus');?>">Ticket Status</a></h3>
+	</div>
+<?
+   }
+   ?>
+   
+   
+   <?php
+				 /* 
+				  $orders = Mage::getResourceModel('sales/order_collection')
+					->addFieldToSelect('*')
+					->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
+					->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
+					->setOrder('created_at', 'desc');   
+				  $this->setOrders($orders);?>
+						   <select name="orderid" class="input-text">
+							   
+			 <?
+				foreach ($orders as $order):
+				 //$order->getRealOrderId().'&nbsp;at&nbsp;'.$this->formatDate($order->getCreatedAtStoreDate()).'&nbsp;('.$order->formatPrice($order->getGrandTotal()).')';
+					//~ $id_order = $order->getRealOrderId();
+					//~ $order = Mage::getModel('sales/order')->loadByIncrementId($id_order);
+					//~ $items = $order->getAllItems();
+					//~ foreach($items as $i):
+						//~ $_product = Mage::getModel('catalog/product')->load($i->getProductId())->getSku();
+						//~ echo $order->getRealOrderId();
+						//~ print_r($_product);
+						//~ echo "<br/>";
+						//~ 
+					//~ endforeach;
+						$orderIncrementId = $order->getRealOrderId();
+						$order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+						echo $order->getId();
+
+						$product = Mage::getModel('catalog/product')->load($order->getId()); 
+
+						echo $productType = $product->getTypeId();
+						echo $product->getName();
+						//echo "<img src='".$product->getImageUrl()."'>";
+				endforeach;
+		*/	
+		?>				
+

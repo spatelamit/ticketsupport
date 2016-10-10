@@ -1,0 +1,50 @@
+<h3>MyModule</h3>
+<?php    
+$db = Mage::getSingleton('core/resource')->getConnection('core_write');
+$tbl = $db->getTableName('MyModule');
+$sql = "select * from `".$tbl."` ORDER BY id DESC ";
+$tickets = $db->fetchAll($sql);
+//print_r($tickets);
+?>
+<table id="my-orders-table" class="data-table orders">
+<colgroup><col width="1">
+<col width="1">
+<col>
+<col width="1">
+<col width="1">
+<col width="1">
+</colgroup><thead>
+<tr class="first last">
+<th class="number">#Ticket Id</th>
+<th class="number">#Order Id</th>
+<th class="ship">Message</th>
+<th class="total"><span class="nobr">Request Type</span></th>
+<th class="status"><span class="nobr">Ticket Status</span></th>
+<th class="date">Date/time</th>
+<th class="view">&nbsp;###</th>
+</tr>
+</thead>
+<tbody>
+<?
+	foreach ($tickets as $ticket):
+?>
+<tr class="first last odd">
+<td class="number"><? echo $ticket['id']; ?></td>
+<td class="number">#<? echo $ticket['orderid']; ?></td>
+<td class="ship"><? echo $ticket['message']; ?></td>
+<td class="total"><span class="price"></span><? echo $ticket['request_type']; ?></td>
+<td class="status"><em><? if($ticket['status']=="Pending"){ echo "<font color='orange'>".$ticket['status']."<font>"; } else{
+echo "<font color='green'>".$ticket['status']."<font>";
+} ?></em></td>
+<td class="date"><span class="nobr"><? echo $ticket['c_time']; ?></span></td>
+<td class="a-center view last">&nbsp;&nbsp;
+<span class="nobr">&nbsp;&nbsp; <a href="<?php echo $currentUrl = Mage::helper('adminhtml')->getUrl('mymodule/adminhtml_mymodulebackend/ticketreply'); ?>?t_id=<? echo $ticket['id']; ?>">  Reply </a>
+</span>
+</td>
+</tr>
+<?
+endforeach;
+?>
+</tbody>
+</table>
+

@@ -1,0 +1,129 @@
+<?php 
+   if(!Mage::getSingleton('customer/session')->isLoggedIn()){
+       echo "Sorry you are not logged in please login <a href='".$this->getUrl('customer/account/login/')."'> here</a>";
+       Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl()); 
+       
+   }
+   else
+   {
+   // Load the customer's data
+			$customer = Mage::getSingleton('customer/session')->getCustomer();
+			$customer->getName(); // Full Name
+			$customer->getEmail();
+			
+		$orders = Mage::getResourceModel('sales/order_collection')
+			->addFieldToSelect('*')
+			->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
+			->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
+			->setOrder('created_at', 'desc');   
+			$this->setOrders($orders);
+	?>
+
+<div class=" mymodule-main" >
+<?
+//$id_order = $order->getRealOrderId();
+ $id_order = $_REQUEST['tktid'];
+	$order = Mage::getModel('sales/order')->loadByIncrementId($id_order);
+	$items = $order->getAllItems();
+	foreach($items as $i):
+		$_product = Mage::getModel('catalog/product')->load($i->getProductId())->getSku();
+		$order->getRealOrderId();
+		
+		$orderIncrementId = $order->getRealOrderId();
+		$order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+		 $order->getId();
+
+		$product = Mage::getModel('catalog/product')->load($order->getId()); 
+
+		 $productType = $product->getTypeId();
+		 $product->getName();
+		
+	endforeach;
+
+$db = Mage::getSingleton('core/resource')->getConnection('core_write');
+$tbl = $db->getTableName('MyModule');
+$sql = "select * from `".$tbl."` where orderid = '".$id_order."' ORDER BY id DESC  ";
+$tickets = $db->fetchAll($sql);
+?>
+<table class="data-table ">
+<colgroup><col width="1">
+<col width="1">
+<col>
+<col width="1">
+<col width="1">
+<col width="1">
+</colgroup><thead>
+<tr class="first last">
+<th class="number">#Ticket Id</th>
+<th class="number">#Order Id</th>
+<th class="ship">Reply Massage</th>
+<th class="ship">Message</th>
+<th class="total"><span class="nobr">Request Type</span></th>
+<th class="date">Date/time</th>
+<th class="status"><span class="nobr">Status</span></th>
+
+</tr>
+</thead>
+<tbody>
+	<?
+	foreach ($tickets as $ticket):
+	?>
+<tr class="">
+<td class="number"><? echo $id_order; ?></td>
+<td class="number">#<? echo $ticket['orderid']; ?></td>
+<td class="ship"><? if($ticket['ReplyMsg']==""){ echo "No Reply"; } else{ echo $ticket['ReplyMsg'];	} ?></td>
+<td class="ship"><? echo $ticket['message']; ?></td>
+<td class="total"><span class="price"></span><? echo $ticket['request_type']; ?></td>
+<td class="date"><span class="nobr"><? echo $ticket['c_time']; ?></span></td>
+<td class="status"><em><? echo $ticket['status']; ?></em></td>
+
+</tr>
+<?
+endforeach;
+?>
+</tbody>
+</table>
+        
+<br/>
+<br/>
+<br/>
+</div>
+
+<?
+   }
+?>
+<?php
+ /* 
+  $orders = Mage::getResourceModel('sales/order_collection')
+	->addFieldToSelect('*')
+	->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
+	->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
+	->setOrder('created_at', 'desc');   
+  $this->setOrders($orders);?>
+		   <select name="orderid" class="input-text">
+			   
+<?
+foreach ($orders as $order):
+ //$order->getRealOrderId().'&nbsp;at&nbsp;'.$this->formatDate($order->getCreatedAtStoreDate()).'&nbsp;('.$order->formatPrice($order->getGrandTotal()).')';
+	//~ $id_order = $order->getRealOrderId();
+	//~ $order = Mage::getModel('sales/order')->loadByIncrementId($id_order);
+	//~ $items = $order->getAllItems();
+	//~ foreach($items as $i):
+		//~ $_product = Mage::getModel('catalog/product')->load($i->getProductId())->getSku();
+		//~ echo $order->getRealOrderId();
+		//~ print_r($_product);
+		//~ echo "<br/>";
+		//~ 
+	//~ endforeach;
+		$orderIncrementId = $order->getRealOrderId();
+		$order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+		echo $order->getId();
+
+		$product = Mage::getModel('catalog/product')->load($order->getId()); 
+
+		echo $productType = $product->getTypeId();
+		echo $product->getName();
+		//echo "<img src='".$product->getImageUrl()."'>";
+endforeach;
+*/	
+?>
