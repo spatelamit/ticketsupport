@@ -69,7 +69,7 @@
   <adminhtml>
 	<menu>
 	  <mymodule module="mymodule">
-		<title>MyModule</title>
+		<title>Ticket Support System</title>
 		<sort_order>100</sort_order>
 		<children>
 		  <mymodulebackend module="mymodule">
@@ -88,7 +88,7 @@
 		<admin>
 		  <children>
 			<mymodule translate="title" module="mymodule">
-			  <title>MyModule</title>
+			  <title>Ticket Support System</title>
 			  <sort_order>1000</sort_order>
 			  <children>
 		  <mymodulebackend translate="title">

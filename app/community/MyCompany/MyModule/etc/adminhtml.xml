@@ -9,7 +9,7 @@
 								<config>
 									<children>
 										<mymodule translate="title" module="mymodule">
-											<title>MyModule Section</title>
+											<title>Ticket Support System</title>
 											<sort_order>0</sort_order>
 										</mymodule>
 									</children>

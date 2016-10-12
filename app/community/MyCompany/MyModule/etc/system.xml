@@ -2,13 +2,13 @@
 <config>
 	  <tabs>
 		<mymodule translate="label" module="mymodule">
-            <label>MyModule</label>
+            <label>Ticket Support System</label>
             <sort_order>0</sort_order>
         </mymodule>
 	  </tabs>
 	  <sections>
 		<mymodule  translate="label" module="mymodule">                    
-		<label>MyModule</label>
+		<label>Ticket Support </label>
 		<tab>mymodule</tab>
 		<frontend_type>text</frontend_type>
 		<sort_order>0</sort_order>
@@ -17,7 +17,7 @@
 		<show_in_store>1</show_in_store>            
 					<groups>
 				      <mymodule translate="label"> 
-					  <label>MyModule</label>
+					  <label>Ticket Support System</label>
 					  <frontend_type>text</frontend_type>
 					  <sort_order>0</sort_order>
 					  <show_in_default>1</show_in_default>
@@ -25,13 +25,13 @@
 					  <show_in_store>1</show_in_store>
 				       <fields>
                           <mymodule translate="label">
-                            <label>MyModule</label>
+                            <label>Ticket Support System</label>
 							<frontend_type>text</frontend_type>
                             <sort_order>0</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-							<comment>MyModule</comment>
+							<comment>Ticket Support System</comment>
                           </mymodule>
 					   </fields>
 					   </mymodule>
